@@ -32,6 +32,12 @@ function wait(ms){
 	}
 }
 
+//Additional generic negative removals
+var regex = new RegExp("don't", "gi")
+document.body.innerHTML = document.body.innerHTML.replace(regex, "do");
+regex = new RegExp("not ", "gi");
+document.body.innerHTML = document.body.innerHTML.replace(regex, "");
+
 /*_-_Main Logic_-_*/
 var document_body = $(document.body);
 var modified_html = document.body.innerHTML;
@@ -53,7 +59,9 @@ if(getIfRequestSuccess(response, "Authenticate")){
 
 	for(var i = 0; i<num_texts; i++){
 
-		var trim_text = page_texts[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+		var trim_text = page_texts[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/(\r\n|\n|\r)/gm,"").replace("\\", "").replace(/[^\w\s]/gi, '').replace("\\n","");
+
+		if (page_texts[i] !== "") {
 
 		var documentID = "d2e7341-a3c2-4fb4-9d3a-779e8b0a5eff";
 		var postData = "{ \"id\": \""+documentID+"\", \"text\": \""+trim_text+"\", \"tag\": \"marker\"}";
@@ -81,7 +89,7 @@ if(getIfRequestSuccess(response, "Authenticate")){
 							var antonym = data[0].word;
 							var regex = new RegExp(original, "gi");
 							//document_body.html().replace(regex,antonym);
-							document.body.innerHTML = document.body.innerHTML.replace(regex, antonym);
+							document.body.innerHTML = modified_html.replace(regex, antonym);
 						});
 
 					}
@@ -92,18 +100,11 @@ if(getIfRequestSuccess(response, "Authenticate")){
 			}
 
 		}
+	}
 
 	}
 
 }
-
-//Additional generic negative removals
-var regex = new RegExp("don't", "gi");
-document.body.innerHTML = document.body.innerHTML.replace(regex, "do");
-regex = new RegExp("don`t", "gi");
-document.body.innerHTML = document.body.innerHTML.replace(regex, "");
-regex = new RegExp("not ", "gi");
-document.body.innerHTML = document.body.innerHTML.replace(regex, "");
 
 // Make positive document visible
 document_body.css('visibility', 'visible');
