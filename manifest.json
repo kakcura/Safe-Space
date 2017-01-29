@@ -1,0 +1,15 @@
+{
+	"manifest_version": 2,
+
+	"name": "Safe Space",
+	"description": "This extension will make social media and internet content safe by making everything positive.",
+	"author": "Korhan Akcura",
+	"version": "1.0",
+
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["libs/jquery.js","libs/SemantriaJavaScriptSDK.js","safe_space.js"]
+		}
+	]
+}
