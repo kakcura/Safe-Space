@@ -81,7 +81,7 @@ if(getIfRequestSuccess(response, "Authenticate")){
 							var antonym = data[0].word;
 							var regex = new RegExp(original, "gi");
 							//document_body.html().replace(regex,antonym);
-							document.body.innerHTML = modified_html.replace(regex, antonym);
+							document.body.innerHTML = document.body.innerHTML.replace(regex, antonym);
 						});
 
 					}
@@ -96,6 +96,14 @@ if(getIfRequestSuccess(response, "Authenticate")){
 	}
 
 }
+
+//Additional generic negative removals
+var regex = new RegExp("don't", "gi");
+document.body.innerHTML = document.body.innerHTML.replace(regex, "do");
+regex = new RegExp("don`t", "gi");
+document.body.innerHTML = document.body.innerHTML.replace(regex, "");
+regex = new RegExp("not ", "gi");
+document.body.innerHTML = document.body.innerHTML.replace(regex, "");
 
 // Make positive document visible
 document_body.css('visibility', 'visible');
